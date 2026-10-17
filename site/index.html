@@ -1,0 +1,723 @@
+<!DOCTYPE html>
+<html lang="ms" data-theme="studio">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Modul Pembinaan WebApp — Bina aplikasi sekolah sendiri, kos RM0</title>
+<meta name="description" content="Modul latihan: bina web app sekolah guna Gemini Canvas (frontend), Google Apps Script (backend), Google Sheets (database), dan hosting percuma.">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,500;0,600;1,500&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23070b16'/%3E%3Cpath d='M9 22V10l7 8 7-8v12' stroke='%2338e0d0' stroke-width='2.6' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+</head>
+<body>
+
+<!-- ======================= BAR NAV ======================= -->
+<header class="topbar" id="topbar">
+  <div class="wrap topbar-in">
+    <a class="brand" href="#atas">
+      <svg viewBox="0 0 32 32" aria-hidden="true">
+        <rect x="1" y="1" width="30" height="30" rx="9" fill="none" stroke="url(#bg1)" stroke-width="1.6"/>
+        <path d="M9 22V10l7 8 7-8v12" fill="none" stroke="url(#bg1)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
+        <defs><linearGradient id="bg1" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stop-color="#38e0d0"/><stop offset="1" stop-color="#8b7bff"/></linearGradient></defs>
+      </svg>
+      <span>Modul Pembinaan WebApp<small>Kos RM0 · Tanpa pelayan</small></span>
+    </a>
+    <nav class="navlinks" id="navlinks">
+      <a href="#peta">Peta</a>
+      <a href="#modul1">Modul 1</a>
+      <a href="#modul2">Modul 2</a>
+      <a href="#modul3">Modul 3</a>
+      <a href="#database">Database</a>
+      <a href="#hosting">Hosting</a>
+      <a href="#selamat">Keselamatan</a>
+      <a href="#amali">Amali</a>
+      <a href="#soalan">Soalan</a>
+    </nav>
+    <div class="tools">
+      <button class="iconbtn" id="themeBtn" title="Tukar tema (gelap / kertas)" aria-label="Tukar tema">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.6v2.2M12 19.2v2.2M2.6 12h2.2M19.2 12h2.2M5.4 5.4l1.6 1.6M17 17l1.6 1.6M18.6 5.4L17 7M7 17l-1.6 1.6"/></svg>
+      </button>
+      <button class="btn btn-primary" id="presentBtn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 4h16v11H4z"/><path d="M12 15v5M8.5 20h7"/></svg>
+        <span class="btn-label">Mod Bentang</span>
+      </button>
+    </div>
+  </div>
+  <div class="bar-progress" id="barProgress"></div>
+</header>
+
+<main id="atas">
+
+<!-- ======================= HERO ======================= -->
+<section class="hero">
+  <div class="wrap">
+    <span class="eyebrow">Modul latihan guru · 6 modul · 90 minit</span>
+    <h1>Bina <em>web app</em> sekolah sendiri.<br>Tanpa pelayan, tanpa kos.</h1>
+    <p class="lead">Satu modul lengkap: <b>Gemini Canvas</b> untuk frontend, <b>Google Apps Script</b> sebagai backend, <b>Google Sheets</b> sebagai database, dan hosting percuma. Untuk guru yang mahu sistem sendiri — borang kehadiran, kuiz, senarai murid, rekod bantuan — dan tak mahu bergantung pada kertas atau WhatsApp.</p>
+    <div class="hero-cta">
+      <a class="btn btn-primary" href="#peta">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M5 12h13M13 6l6 6-6 6"/></svg>
+        Mula Modul 1
+      </a>
+      <a class="btn" href="#amali">Lihat amali 30 minit</a>
+      <a class="btn" href="https://docs.google.com/spreadsheets/d/1ww4UOM6tf1YnIq1E_N-rW-rO798-Brcz1oh1san9hBY/edit" target="_blank" rel="noopener">Contoh database (Sheet)</a>
+    </div>
+    <div class="statrow">
+      <div class="stat"><b>RM0</b><span>kos hosting + database</span></div>
+      <div class="stat"><b>3</b><span>komponen sahaja: frontend, backend, DB</span></div>
+      <div class="stat"><b>1 fail</b><span>frontend — mudah disalin &amp; disimpan</span></div>
+      <div class="stat"><b>~20k</b><span>permintaan/hari had percuma Apps Script</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ======================= MENGAPA ======================= -->
+<section id="kenapa">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="sec-tag">Kenapa</span>
+      <h2>Masalah biasa di sekolah, dan jalan keluarnya</h2>
+      <p>Kebanyakan masalah urusan sekolah ialah masalah <b>data</b> — siapa hadir, siapa belum bayar, siapa dapat markah berapa. Fail Excel di komputer peribadi dan borang kertas tidak boleh dikongsi atau dianalisis.</p>
+    </div>
+    <div class="grid g2">
+      <div class="card reveal">
+        <h3><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M6 3h9l4 4v14H6z"/><path d="M9 8h6M9 12h6M9 16h4"/></svg> Cara lama</h3>
+        <ul class="clean">
+          <li>Borang diedar, diisi tangan, then ditaip semula ke Excel <b>— kerja berganda</b>.</li>
+          <li>Fail Excel dalam telefon peribadi, versi berbeza setiap guru.</li>
+          <li>Kutipan bayaran/kehadiran sukar dijejaki; guru besar minta laporan, kena kira manual.</li>
+          <li>Penyelesaian berbayar (Google Forms terhad, sistem komersial) mahal atau tak fleksibel.</li>
+        </ul>
+      </div>
+      <div class="card reveal">
+        <h3><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M12 3l8 4.5v9L12 21l-8-4.5v-9z"/><path d="M12 12l8-4.5M12 12v9M12 12L4 7.5"/></svg> Cara baru (modul ini)</h3>
+        <ul class="clean">
+          <li>Guru isi <b>web app</b> dari telefon; data terus masuk ke satu Sheet.</li>
+          <li>Semua guru lihat data sama, versi sama, masa nyata.</li>
+          <li>Laporan = satu paparan/grafik yang dikira sendiri oleh app.</li>
+          <li>Kos: <b>RM0</b>. Kemahiran: cukup untuk diselenggara sendiri, tanpa pelayan.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="note ok reveal mt2"><b>Prinsip modul ini:</b> satu perubahan kecil pada satu masa. Setiap modul boleh diuji sendiri — kalau satu bahagian gagal, yang lain tetap jalan.</div>
+  </div>
+</section>
+
+<!-- ======================= PETA SENI BINA ======================= -->
+<section id="peta">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="sec-tag">Peta besar</span>
+      <h2>Empat bahagian sesebuah web app</h2>
+      <p>Setiap web app ada empat bahagian. Faham peranan setiap satu, dan seluruh modul ini jadi mudah — termasuk bila nak tukar database atau hosting.</p>
+    </div>
+
+    <div class="map-panel reveal">
+      <svg class="map-svg" viewBox="0 0 960 230" role="img" aria-label="Rajah: Frontend, Backend, Database, Hosting">
+        <defs>
+          <linearGradient id="gA" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#38e0d0"/><stop offset="1" stop-color="#38e0d0" stop-opacity=".35"/></linearGradient>
+          <linearGradient id="gB" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#8b7bff"/><stop offset="1" stop-color="#8b7bff" stop-opacity=".35"/></linearGradient>
+          <linearGradient id="gC" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffc861"/><stop offset="1" stop-color="#ffc861" stop-opacity=".35"/></linearGradient>
+        </defs>
+        <rect class="box" x="24" y="60" width="220" height="104" rx="16" stroke="url(#gA)" stroke-width="2"/>
+        <text x="134" y="96" text-anchor="middle" font-size="17" font-weight="600">Frontend</text>
+        <text x="134" y="118" text-anchor="middle" class="sub">index.html — apa yang dilihat</text>
+        <text x="134" y="138" text-anchor="middle" class="sub">Gemini Canvas</text>
+
+        <rect class="box" x="288" y="60" width="220" height="104" rx="16" stroke="url(#gB)" stroke-width="2"/>
+        <text x="398" y="96" text-anchor="middle" font-size="17" font-weight="600">Backend</text>
+        <text x="398" y="118" text-anchor="middle" class="sub">Code.gs — otak &amp; pengawal</text>
+        <text x="398" y="138" text-anchor="middle" class="sub">Google Apps Script</text>
+
+        <rect class="box" x="552" y="60" width="220" height="104" rx="16" stroke="url(#gC)" stroke-width="2"/>
+        <text x="662" y="96" text-anchor="middle" font-size="17" font-weight="600">Database</text>
+        <text x="662" y="118" text-anchor="middle" class="sub">Google Sheets (atau Supabase…)</text>
+        <text x="662" y="138" text-anchor="middle" class="sub">data disimpan di sini</text>
+
+        <rect class="box" x="816" y="60" width="120" height="104" rx="16" stroke="var(--line-strong)" stroke-width="2" stroke-dasharray="6 5"/>
+        <text x="876" y="96" text-anchor="middle" font-size="15" font-weight="600">Hosting</text>
+        <text x="876" y="116" text-anchor="middle" class="sub">Google Site</text>
+        <text x="876" y="132" text-anchor="middle" class="sub">CF / Netlify</text>
+        <text x="876" y="148" text-anchor="middle" class="sub">GitHub Pages</text>
+
+        <path class="arrow" d="M246 112h38" marker-end="url(#ah)"/>
+        <path class="arrow" d="M510 112h38" marker-end="url(#ah)"/>
+        <path class="arrow" d="M774 112h38" marker-end="url(#ah)"/>
+        <defs><marker id="ah" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0l10 5-10 5z" fill="currentColor" opacity=".5"/></marker></defs>
+        <text x="480" y="42" text-anchor="middle" class="sub">1 minta data → 2 semak &amp; proses → 3 simpan/ambil → 4 dipaparkan kepada guru</text>
+        <text x="480" y="200" text-anchor="middle" class="sub">Klik pilihan di bawah untuk lihat peranan, contoh kod dan alat bagi setiap bahagian</text>
+      </svg>
+
+      <div class="zone-tabs" role="tablist" id="zoneTabs">
+        <button role="tab" data-t="frontend" aria-selected="true">Frontend</button>
+        <button role="tab" data-t="backend" aria-selected="false">Backend</button>
+        <button role="tab" data-t="db" aria-selected="false">Database</button>
+        <button role="tab" data-t="host" aria-selected="false">Hosting</button>
+      </div>
+
+      <div class="zone-panel" data-g="frontend" data-open="true">
+        <h4>Frontend = kaunter restoran</h4>
+        <p>Bahagian yang dilihat dan disentuh oleh guru: borang, butang, jadual, grafik. Ia <b>tidak menyimpan apa-apa</b> dan tidak boleh menyimpan rahsia — kodnya boleh dilihat sesiapa melalui “View Source”.</p>
+        <ul class="clean">
+          <li><b>Alat:</b> Gemini Canvas (satu prompt), apa-apa editor teks, VS Code, Notepad.</li>
+          <li><b>Fail:</b> satu fail <span class="mono">index.html</span> (HTML + CSS + JS sekali).</li>
+          <li><b>Peraturan besi:</b> API key, kata laluan, token — <b>tidak sekali-kali</b> di sini.</li>
+        </ul>
+      </div>
+      <div class="zone-panel" data-g="backend">
+        <h4>Backend = dapur</h4>
+        <p>Dapur menerima pesanan, menyemak bahan, memasak, kemudian menghantar hasil. Di sini juga resepi rahsia (API key) disimpan — pelanggan tak nampak.</p>
+        <ul class="clean">
+          <li><b>Alat:</b> Google Apps Script (percuma, duduk dalam Sheet yang sama). Tanpa pelayan, tanpa bayaran.</li>
+          <li><b>Fail:</b> <span class="mono">Code.gs</span> — fungsi <span class="mono">doGet()</span> (baca) dan <span class="mono">doPost()</span> (tulis).</li>
+          <li><b>Peranan:</b> sahkan input, elak data sampah, simpan rahsia, kawal siapa boleh baca/tulis.</li>
+        </ul>
+      </div>
+      <div class="zone-panel" data-g="db">
+        <h4>Database = gudang</h4>
+        <p>Tempat data disimpan secara kekal. Google Sheets cukup untuk kebanyakan urusan sekolah, tetapi ada had — Modul 4 menerangkan bila patut pindah ke Supabase, Firebase, MongoDB atau MariaDB.</p>
+        <ul class="clean">
+          <li><b>Mudah &amp; percuma:</b> Google Sheets (10 juta sel setiap fail).</li>
+          <li><b>Bila data mula besar/ramai pengguna:</b> Supabase (Postgres), Firebase, MongoDB Atlas, MariaDB/MySQL.</li>
+          <li><b>Amalan wajib:</b> backup mingguan (Sheet → Download → .xlsx) dan siapkan header yang tetap.</li>
+        </ul>
+      </div>
+      <div class="zone-panel" data-g="host">
+        <h4>Hosting = dewan makan</h4>
+        <p>Supaya orang lain dapat masuk. Semua pilihan dalam modul ini percuma — beza utama ialah berapa mudah dikemas kini.</p>
+        <ul class="clean">
+          <li><b>Google Sites</b> — embed URL <span class="mono">/exec</span>, paling mudah, sesuai untuk guru.</li>
+          <li><b>Cloudflare Pages / Netlify</b> — drag &amp; drop fail, URL cantik, domain sendiri boleh.</li>
+          <li><b>GitHub Pages</b> — percuma, sesuai bila anda mahu kawalan versi (site ini sendiri diletak di sini).</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ======================= MODUL 1 ======================= -->
+<section id="modul1">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="sec-tag">Modul 1</span>
+      <h2>Frontend dengan Gemini Canvas</h2>
+      <p>Canvas ialah <b>bengkel</b>: satu prompt, dua hasil — fail <span class="mono">index.html</span> (frontend) dan <span class="mono">Code.gs</span> (backend). Ia bukan database dan bukan host.</p>
+    </div>
+    <div class="grid g3">
+      <div class="card reveal">
+        <h3><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 6h16v12H4z"/><path d="M8 10h8M8 14h5"/></svg> Apa yang bagus</h3>
+        <ul class="clean">
+          <li>Satu prompt → reka bentuk + kod + backend sekali.</li>
+          <li>Boleh minta perubahan bahasa Melayu, warna, susun atur.</li>
+          <li>Jimat masa untuk guru yang bukan pengaturcara.</li>
+        </ul>
+      </div>
+      <div class="card reveal">
+        <h3><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M12 3l9 16H3z"/><path d="M12 9v5M12 17h.01"/></svg> Hadnya</h3>
+        <ul class="clean">
+          <li>Bukan database, bukan hosting, bukan jaminan kod betul sepenuhnya.</li>
+          <li>Kod mesti <b>diuji</b> — baca, faham, betulkan sendiri.</li>
+          <li>Jangan letak kunci API di frontend walau apa pun yang Canvas cadang.</li>
+        </ul>
+      </div>
+      <div class="card reveal">
+        <h3><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M5 5h14v14H5z"/><path d="M9 9h6v6H9z"/></svg> Hasil</h3>
+        <ul class="clean">
+          <li><span class="mono">index.html</span> — simpan dalam folder projek.</li>
+          <li><span class="mono">Code.gs</span> — akan tampal ke Apps Script (Modul 2).</li>
+          <li>Satu penanda: <span class="mono">PASTE_URL_APPS_SCRIPT_DI_SINI</span>.</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3 class="mt2 reveal">Prompt Canvas yang boleh terus guna</h3>
+    <p class="small reveal">Tampal dalam Gemini Canvas. Perhatikan bahagian <b>FRONTEND</b> dan <b>BACKEND</b> — kedua-duanya diminta dalam satu prompt.</p>
+    <div class="codeblock reveal">
+      <button class="copy" title="Salin prompt" aria-label="Salin prompt">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M6 15H5a1 1 0 01-1-1V5a1 1 0 011-1h9a1 1 0 011 1v1"/></svg>
+      </button>
+      <div class="code-cap">prompt-canvas.txt</div>
+      <pre><code>Bina satu webapp responsif dalam SATU fail index.html tanpa library luar,
+DAN sediakan kod Code.gs untuk Google Apps Script (backend).
+
+Bahasa antaramuka: Bahasa Melayu.
+
+FRONTEND (index.html):
+1. Borang dengan medan nama dan mesej.
+2. Butang Simpan menghantar POST ke Google Apps Script.
+3. Butang Baca Data membuat GET dan memaparkan rekod dalam jadual.
+4. Paparkan loading, berjaya, ralat dan empty state.
+5. Mesra telefon dan mudah digunakan oleh guru.
+
+Gunakan:
+var GAS_URL = 'PASTE_URL_APPS_SCRIPT_DI_SINI';
+
+Untuk POST:
+fetch(GAS_URL, { method: 'POST', body: JSON.stringify(data) });
+Jangan tetapkan Content-Type: application/json untuk pola GAS ini.
+
+BACKEND (Code.gs) — sedia untuk tampal dalam Extensions → Apps Script:
+- var SHEET_NAME = 'Log'
+- doGet() baca data dan balas JSON
+- doPost(e) semak body.nama dan body.mesej, tulis row guna LockService
+- getSheet_() cipta tab Log jika belum ada (header: masa, nama, mesej)
+- json_(data) balas ContentService JSON</code></pre>
+    </div>
+    <div class="note reveal"><b>Kenapa tiada header <span class="mono">Content-Type: application/json</span>?</b> Ia mencetuskan <i>preflight</i> (OPTIONS) yang Apps Script tolak dengan 403. Hantar JSON sebagai <i>body</i> biasa sahaja — ini punca nombor satu “kenapa simpan tak jalan”.</div>
+  </div>
+</section>
+
+<!-- ======================= MODUL 2 ======================= -->
+<section id="modul2">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="sec-tag">Modul 2</span>
+      <h2>Backend: Google Apps Script</h2>
+      <p>Backend ialah tempat data disemak dan disimpan, dan tempat rahsia (API key) dilindungi. Anda <b>tidak</b> memasang apa-apa pelayan — semuanya di Google.</p>
+    </div>
+    <div class="steps" id="stepsM2">
+      <div class="step reveal">
+        <input class="check" type="checkbox" data-key="m2-1" aria-label="Tanda langkah 1">
+        <div><h4>Buka Sheet, bukan editor berasingan</h4><p>Dalam Google Sheet: <b>Extensions → Apps Script</b>. Padam kod contoh, tampal <span class="mono">Code.gs</span> dari Canvas.</p></div>
+        <span class="pill">Extensions</span>
+      </div>
+      <div class="step reveal">
+        <input class="check" type="checkbox" data-key="m2-2" aria-label="Tanda langkah 2">
+        <div><h4>Deploy sebagai Web app</h4><p><b>Deploy → New deployment → Web app</b>. Execute as: <b>Me</b>. Who has access: pilih ikut sensitiviti data (untuk ujian: Anyone; untuk data murid: hanya akaun sekolah).</p></div>
+        <span class="pill warn">Penting</span>
+      </div>
+      <div class="step reveal">
+        <input class="check" type="checkbox" data-key="m2-3" aria-label="Tanda langkah 3">
+        <div><h4>Salin URL yang berakhir <span class="mono">/exec</span></h4><p>Bukan URL editor, bukan <span class="mono">/dev</span>. URL ini yang dihubungkan ke frontend.</p></div>
+        <span class="pill">/exec</span>
+      </div>
+      <div class="step reveal">
+        <input class="check" type="checkbox" data-key="m2-4" aria-label="Tanda langkah 4">
+        <div><h4>Selepas setiap perubahan kod: versi baharu</h4><p><b>Deploy → Manage deployments → Edit → Version: New version → Deploy</b>. URL kekal sama — ini sebab “kod dah ubah tapi masih sama”.</p></div>
+        <span class="pill warn">New version</span>
+      </div>
+    </div>
+
+    <h3 class="mt2 reveal">Code.gs — backend minimum yang lengkap</h3>
+    <div class="codeblock reveal">
+      <button class="copy" title="Salin Code.gs" aria-label="Salin Code.gs">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M6 15H5a1 1 0 01-1-1V5a1 1 0 011-1h9a1 1 0 011 1v1"/></svg>
+      </button>
+      <div class="code-cap">Code.gs</div>
+      <pre><code>var SHEET_NAME = 'Log';
+
+function doGet(e) {                       // BACA:  fetch(GAS_URL + '?action=read')
+  var sh = getSheet_();
+  return json_(sh.getDataRange().getValues());
+}
+
+function doPost(e) {                      // TULIS: frontend POST JSON
+  try {
+    var body = JSON.parse(e.postData.contents);
+    if (!body.nama || !body.mesej) return json_({ ok: false, ralat: 'Medan wajib kosong' });
+
+    var lock = LockService.getScriptLock();   // elak dua tulisan serentak
+    lock.waitLock(20000);
+    try {
+      getSheet_().appendRow([new Date(), body.nama, String(body.mesej).slice(0, 500)]);
+    } finally {
+      lock.releaseLock();
+    }
+    return json_({ ok: true });
+  } catch (err) {
+    return json_({ ok: false, ralat: String(err) });
+  }
+}
+
+function getSheet_() {                   // cipta tab + header jika belum ada
+  var ss = SpreadsheetApp.getActiveSpreadsheet();
+  var sh = ss.getSheetByName(SHEET_NAME);
+  if (!sh) {
+    sh = ss.insertSheet(SHEET_NAME);
+    sh.appendRow(['masa', 'nama', 'mesej']);
+  }
+  return sh;
+}
+
+function json_(obj) {                    // WAJIB untuk web app
+  return ContentService.createTextOutput(JSON.stringify(obj))
+    .setMimeType(ContentService.MimeType.JSON);
+}</code></pre>
+    </div>
+    <div class="grid g2 mt2">
+      <div class="note reveal"><b>Had percuma:</b> ~20,000 permintaan/hari dan 6 minit setiap pelaksanaan. Untuk borang kehadiran, kuiz dan rekod sekolah — jauh lebih daripada cukup.</div>
+      <div class="note danger reveal"><b>Jangan:</b> letak API key, nombor telefon guru atau kata laluan di dalam frontend. Semua rahsia duduk dalam <b>Project Settings → Script Properties</b>, dan dipanggil oleh backend.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ======================= MODUL 3 ======================= -->
+<section id="modul3">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="sec-tag">Modul 3</span>
+      <h2>Database: Google Sheets</h2>
+      <p>Sheet ialah gudang yang boleh anda buka, semak dan edit sendiri — inilah kelebihan besarnya berbanding database “sebenar” untuk kegunaan sekolah.</p>
+    </div>
+    <div class="grid g2">
+      <div class="card reveal">
+        <h3><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 6h16v12H4z"/><path d="M4 10h16M9 10v8M15 10v8"/></svg> Susunan yang betul</h3>
+        <ul class="clean">
+          <li><b>Baris 1 = header tetap:</b> <span class="mono">masa | nama | kelas | …</span> Jangan tukar nama header selepas sistem hidup.</li>
+          <li><b>Satu jadual = satu tab.</b> Jangan campur rekod kehadiran dengan rekod bayaran.</li>
+          <li><b>ID unik</b> (cth nombor kad pengenalan atau nombor pendaftaran) untuk elak rekod berganda.</li>
+          <li><b>Tarikh</b> simpan sebagai tarikh sebenar, bukan teks — supaya boleh ditapis dan dijumlah.</li>
+          <li>Jangan simpan data sensitif (perubatan, disiplin, gaji) dalam Sheet yang dikongsi awam.</li>
+        </ul>
+      </div>
+      <div class="card reveal">
+        <h3><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M12 3v6M12 21a4 4 0 004-4c0-3-4-9-4-9s-4 6-4 9a4 4 0 004 4z"/></svg> Had &amp; amaran</h3>
+        <ul class="clean">
+          <li>Had ~<b>10 juta sel</b> setiap fail. Ratusan ribu baris masih OK; jutaan — tidak.</li>
+          <li>Bilangan pengguna serentak yang tinggi boleh lembap (Sheet bukan database web sebenar).</li>
+          <li>Sheet boleh dipadam oleh sesiapa yang ada akses — <b>backup mingguan wajib</b>.</li>
+          <li>Bila data makin besar → pindah ke Supabase/Firebase/MongoDB/MariaDB (Modul 4).</li>
+        </ul>
+      </div>
+    </div>
+    <h3 class="mt2 reveal">Contoh permintaan &amp; jawapan (yang anda patut uji sendiri)</h3>
+    <div class="codeblock reveal">
+      <button class="copy" title="Salin ujian" aria-label="Salin ujian">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M6 15H5a1 1 0 01-1-1V5a1 1 0 011-1h9a1 1 0 011 1v1"/></svg>
+      </button>
+      <div class="code-cap">uji-frontend.js</div>
+      <pre><code>var GAS_URL = 'https://script.google.com/macros/s/AKfycb…/exec';
+
+// 1) TULIS — tiada header Content-Type (elak preflight 403)
+fetch(GAS_URL, {
+  method: 'POST',
+  body: JSON.stringify({ nama: 'Cikgu Amin', mesej: 'Ujian pertama' })
+}).then(function (r) { return r.json(); }).then(console.log);
+
+// 2) BACA
+fetch(GAS_URL + '?action=read')
+  .then(function (r) { return r.json(); })
+  .then(function (rows) { console.log(rows.length + ' rekod'); });
+
+// Ujian lulus apabila: borang → baris baharu muncul dalam tab Log → Baca Data
+// memaparkan baris yang SAMA, dan loading / ralat / empty state turut kelihatan.</code></pre>
+    </div>
+  </div>
+</section>
+
+<!-- ======================= MODUL 4: DATABASE LAIN ======================= -->
+<section id="database">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="sec-tag">Modul 4</span>
+      <h2>Bila Sheet tak cukup: Supabase, Firebase, MongoDB, MariaDB</h2>
+      <p>Sheet mengalah bila data jadi besar, pengguna ramai, atau bila anda perlukan login pengguna dan kebenaran yang ketat. Ini pilihan yang biasa digunakan guru-guru dan sekolah — semua ada peringkat percuma.</p>
+    </div>
+    <div class="tablewrap reveal">
+      <table>
+        <thead>
+          <tr><th>Pilihan</th><th>Jenis</th><th>Kos asas</th><th>Paling sesuai untuk</th><th>Perhatian</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><b>Google Sheets</b></td><td>Hamparan (spreadsheet)</td><td><span class="pill free">Percuma</span></td>
+            <td>Borang, kehadiran, kuiz, rekod ringan; data boleh dilihat &amp; diedit terus</td>
+            <td>Had sel &amp; pengguna serentak; bukan untuk data sensitif awam</td>
+          </tr>
+          <tr>
+            <td><b>Supabase</b></td><td>Postgres + auth + storage</td><td><span class="pill free">Percuma</span> (2 projek)</td>
+            <td>App dengan <b>login Google</b>, peranan pengguna, data berstruktur &amp; berhubung</td>
+            <td>Perlu faham sedikit SQL; boleh self-host jika sekolah ada pelayan</td>
+          </tr>
+          <tr>
+            <td><b>Firebase</b></td><td>Dokumen (Firestore) + auth</td><td><span class="pill free">Percuma</span> (Spark)</td>
+            <td>App masa nyata (kehadiran langsung), mudah untuk pemula, login Google</td>
+            <td>Pertanyaan terhad berbanding SQL; keluar dari rangka kerja Google susah sedikit</td>
+          </tr>
+          <tr>
+            <td><b>MongoDB Atlas</b></td><td>Dokumen (NoSQL)</td><td><span class="pill free">Percuma</span> (512 MB)</td>
+            <td>Data tidak seragam/berubah bentuk, log, data mentah</td>
+            <td>Perlu backend sendiri (Node/Apps Script tak sesuai); tak ada hubungan jadual</td>
+          </tr>
+          <tr>
+            <td><b>MariaDB / MySQL</b></td><td>SQL klasik</td><td><span class="pill free">Percuma</span> (self-host)</td>
+            <td>Sistem lama sekolah (PHP), laporan berat, kawalan penuh</td>
+            <td>Mesti ada pelayan (komputer/NAS/rumah); perlu buat backup sendiri</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="grid g2 mt2">
+      <div class="card reveal">
+        <h3><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M12 3l8 4.5v9L12 21l-8-4.5v-9z"/><path d="M12 12v9M12 12l8-4.5M12 12L4 7.5"/></svg> Cara memilih (soalan 3 detik)</h3>
+        <ul class="clean">
+          <li><b>Data perlu dilihat/diedit guru terus?</b> → Google Sheets.</li>
+          <li><b>Perlu login &amp; peranan (guru/admin/murid)?</b> → Supabase atau Firebase.</li>
+          <li><b>Data tak seragam, cuma simpan &amp; baca?</b> → MongoDB.</li>
+          <li><b>Sekolah dah ada pelayan &amp; sistem PHP?</b> → MariaDB/MySQL.</li>
+        </ul>
+      </div>
+      <div class="card reveal">
+        <h3><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h10"/></svg> Amalan sama walau apa database</h3>
+        <ul class="clean">
+          <li>Frontend <b>tidak pernah</b> menyimpan kunci database yang boleh menulis tanpa had.</li>
+          <li>Semakan hak akses di <b>server</b> (Apps Script / Edge Function / API), bukan di frontend.</li>
+          <li>Backup berjadual + ujian pulih (restore) sekali sekala.</li>
+          <li>Nama medan &amp; struktur diasingkan supaya boleh tukar database tanpa tulis semula frontend.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="note reveal mt2"><b>Tip untuk sekolah dengan NAS/pelayan sendiri:</b> Supabase boleh dipasang sendiri (self-host) — data tinggal dalam sekolah, tiada kos langganan, dan login boleh guna akaun Google sekolah. Pilihan ini sesuai bila data melibatkan murid.</div>
+  </div>
+</section>
+
+<!-- ======================= MODUL 5: HOSTING ======================= -->
+<section id="hosting">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="sec-tag">Modul 5</span>
+      <h2>Hosting percuma: Google Sites, Cloudflare Pages, Netlify, GitHub Pages</h2>
+      <p>Frontend anda satu fail <span class="mono">index.html</span>. Tugas hosting cuma <b>meletakkan fail itu di tempat yang boleh dibuka orang lain</b>.</p>
+    </div>
+    <div class="tablewrap reveal">
+      <table>
+        <thead>
+          <tr><th>Pilihan</th><th>Bagaimana</th><th>Sesuai bila</th><th>Perhatian</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><b>Google Sites</b><br><span class="pill free">Percuma</span></td>
+            <td><span class="mono">Insert → Embed → By URL</span> → tampal URL <span class="mono">/exec</span> → Publish</td>
+            <td>Paling mudah untuk guru; semua dalam ekosistem Google</td>
+            <td>Embed sahaja — susun atur terhad; sesuai untuk app satu halaman</td>
+          </tr>
+          <tr>
+            <td><b>Cloudflare Pages</b><br><span class="pill free">Percuma</span></td>
+            <td>Drag &amp; drop folder, atau hubungkan repo GitHub</td>
+            <td>Mahu URL cantik + domain sekolah sendiri + laju (CDN)</td>
+            <td>Perlu akaun Cloudflare; domain sendiri perlu pendaftaran berbayar</td>
+          </tr>
+          <tr>
+            <td><b>Netlify</b><br><span class="pill free">Percuma</span></td>
+            <td>Drag &amp; drop folder ke app.netlify.com/drop</td>
+            <td>Nak hidupkan URL dalam 30 saat tanpa daftar rumit</td>
+            <td>Nama URL rawak (boleh tukar); had jalur lebar peringkat percuma</td>
+          </tr>
+          <tr>
+            <td><b>GitHub Pages</b><br><span class="pill free">Percuma</span></td>
+            <td>Repo awam → Settings → Pages → branch <span class="mono">main</span></td>
+            <td>Mahu simpan versi (sejarah perubahan) &amp; kemas kini berulang</td>
+            <td>Perlu tahu sedikit git; repo mesti awam untuk peringkat percuma</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="grid g2 mt2">
+      <div class="card reveal">
+        <h3><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M12 4v12"/><path d="M7 12l5 5 5-5"/><path d="M5 20h14"/></svg> Langkah GitHub Pages (4 langkah)</h3>
+        <ul class="clean">
+          <li>Cipta repo awam, contoh <span class="mono">webapp-kehadiran</span>.</li>
+          <li>Muat naik <span class="mono">index.html</span> (dan apa-apa fail sokongan).</li>
+          <li>Settings → Pages → Source: <b>Deploy from a branch</b> → <span class="mono">main</span> → <span class="mono">/ (root)</span> → Save.</li>
+          <li>Tunggu 1–2 minit → buka <span class="mono">https://&lt;nama-akaun&gt;.github.io/webapp-kehadiran/</span>.</li>
+        </ul>
+      </div>
+      <div class="card reveal">
+        <h3><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="8"/><path d="M4 12h16M12 4c3 3 3 13 0 16M12 4c-3 3-3 13 0 16"/></svg> Website ini pun bukti</h3>
+        <ul class="clean">
+          <li>Modul ini sendiri diletak di <b>GitHub Pages</b> — percuma, awam, boleh dikemas kini.</li>
+          <li>Frontend sahaja: tiada pelayan, tiada pangkalan data untuk modul ini.</li>
+          <li>Boleh juga <b>disimpan sebagai fail</b> dan dibuka terus tanpa internet — sesuai bila venue tiada Wi-Fi.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="note reveal mt2"><b>Perhatian penting:</b> URL Apps Script (<span class="mono">/exec</span>) yang dibenarkan “Anyone” bermaksud <b>sesiapa yang tahu URL</b> boleh hantar data. Untuk data murid, pilih akses terhad (akaun sekolah) dan sahkan pengguna di backend.</div>
+  </div>
+</section>
+
+<!-- ======================= MODUL 6: KESELAMATAN ======================= -->
+<section id="selamat">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="sec-tag">Modul 6</span>
+      <h2>Keselamatan &amp; amalan baik</h2>
+      <p>Enam peraturan ini membezakan app “boleh guna” dengan app “boleh dipecahkan orang”.</p>
+    </div>
+    <div class="grid g3">
+      <div class="card reveal">
+        <h3><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="5" y="10" width="14" height="10" rx="2"/><path d="M8 10V7a4 4 0 018 0v3"/></svg> Rahsia di server</h3>
+        <p>API key, token, kata laluan → <b>Script Properties</b> / pemboleh ubah persekitaran di backend. Frontend hanya menyebut nama tindakan, bukan kunci.</p>
+      </div>
+      <div class="card reveal">
+        <h3><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M12 4l7 3v5c0 4.5-3 7.5-7 8.5C8 19.5 5 16.5 5 12V7z"/><path d="M9.5 12l1.8 1.8 3.4-3.6"/></svg> Semak di server</h3>
+        <p>Jangan percaya apa yang datang dari frontend. Sahkan medan wajib, had panjang teks, format emel/kad pengenalan di backend.</p>
+      </div>
+      <div class="card reveal">
+        <h3><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="8" r="3.4"/><path d="M5.5 20c1.4-3.4 3.8-5 6.5-5s5.1 1.6 6.5 5"/></svg> Login &amp; peranan</h3>
+        <p>Untuk data murid: guna <b>login akaun sekolah</b> (Google SSO) dan tetapkan siapa admin, siapa guru, siapa hanya baca.</p>
+      </div>
+      <div class="card reveal">
+        <h3><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M5 5h14v10H5z"/><path d="M9 19h6M12 15v4"/></svg> Backup berjadual</h3>
+        <p>Sheet → File → Download (.xlsx) setiap minggu; atau skrip salinan automatik. Backup yang tidak pernah diuji bukan backup.</p>
+      </div>
+      <div class="card reveal">
+        <h3><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M6 4h12v16H6z"/><path d="M9 8h6M9 12h6M9 16h3"/></svg> Jejak siapa ubah apa</h3>
+        <p>Tambah medan <span class="mono">emel_pengguna</span> + <span class="mono">masa</span> pada setiap tulisan. Bila ada salah faham, rekod menjawab.</p>
+      </div>
+      <div class="card reveal">
+        <h3><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M12 3l9 16H3z"/><path d="M12 9v5M12 17h.01"/></svg> Data peribadi murid</h3>
+        <p>Kumpul yang perlu sahaja. Jangan kongsi Sheet kepada “anyone with the link”; jangan simpan nombor kad, kesihatan atau gaji dalam app percubaan.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ======================= AMALI ======================= -->
+<section id="amali">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="sec-tag">Amali</span>
+      <h2>Latihan 30 minit: satu app lengkap</h2>
+      <p>Hasil akhir: borang yang menyimpan data ke Sheet, memaparkan semula rekod itu, dan dipasang di hosting percuma. Tandakan setiap langkah yang selesai.</p>
+    </div>
+    <div class="progress" aria-hidden="true"><i id="progAmali"></i></div>
+    <div class="steps" id="stepsAmali">
+      <div class="step reveal">
+        <input class="check" type="checkbox" data-key="am-1" aria-label="Tanda langkah 1">
+        <div><h4>Minta Gemini Canvas bina frontend + Code.gs</h4><p>Guna prompt Modul 1. Simpan <span class="mono">index.html</span> ke dalam folder projek.</p></div><span class="pill">5 min</span>
+      </div>
+      <div class="step reveal">
+        <input class="check" type="checkbox" data-key="am-2" aria-label="Tanda langkah 2">
+        <div><h4>Cipta Google Sheet sebagai database</h4><p>Buka <span class="mono">sheets.new</span>, beri nama “WebApp Kehadiran”. Tab <span class="mono">Log</span> akan dicipta oleh backend.</p></div><span class="pill">2 min</span>
+      </div>
+      <div class="step reveal">
+        <input class="check" type="checkbox" data-key="am-3" aria-label="Tanda langkah 3">
+        <div><h4>Tampal Code.gs → Extensions → Apps Script</h4><p>Padam kod contoh terlebih dahulu. Simpan (Ctrl+S).</p></div><span class="pill">3 min</span>
+      </div>
+      <div class="step reveal">
+        <input class="check" type="checkbox" data-key="am-4" aria-label="Tanda langkah 4">
+        <div><h4>Deploy sebagai Web app → salin URL <span class="mono">/exec</span></h4><p>Execute as: Me. Access: ikut sensitiviti data.</p></div><span class="pill">5 min</span>
+      </div>
+      <div class="step reveal">
+        <input class="check" type="checkbox" data-key="am-5" aria-label="Tanda langkah 5">
+        <div><h4>Sambung frontend: ganti <span class="mono">PASTE_URL_APPS_SCRIPT_DI_SINI</span></h4><p>Uji simpan satu rekod, semak tab Log, kemudian tekan Baca Data.</p></div><span class="pill">5 min</span>
+      </div>
+      <div class="step reveal">
+        <input class="check" type="checkbox" data-key="am-6" aria-label="Tanda langkah 6">
+        <div><h4>Hosting: GitHub Pages atau Netlify drop</h4><p>Atau embed URL <span class="mono">/exec</span> dalam Google Sites untuk paparan paling mudah.</p></div><span class="pill">10 min</span>
+      </div>
+    </div>
+    <div class="grid g3 mt2">
+      <div class="card reveal">
+        <h3><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 6h16v12H4z"/><path d="M8 10h8M8 14h4"/></svg> Idea app untuk sekolah</h3>
+        <ul class="clean">
+          <li>Borang kehadiran program (dengan masa masuk/keluar).</li>
+          <li>Kuiz ringkas + markah automatik.</li>
+          <li>Senarai murid &amp; rekod bayaran PIBG.</li>
+          <li>Tempahan bilik/aset (projektor, gelanggang).</li>
+          <li>Borang aduan &amp; maklum balas ibu bapa.</li>
+        </ul>
+      </div>
+      <div class="card reveal">
+        <h3><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M12 4v16M4 12h16"/></svg> Naik taraf seterusnya</h3>
+        <ul class="clean">
+          <li>Tambah <b>grafik</b> (SVG) daripada data Sheet — jadual jadi laporan.</li>
+          <li>Tambah <b>eksport PDF</b> untuk laporan bulanan.</li>
+          <li>Tambah <b>e-mel automatik</b> kepada guru bertugas (Gmail API dalam Apps Script).</li>
+          <li>Tambah <b>login</b> bila data mula sensitif (Supabase/Firebase).</li>
+        </ul>
+      </div>
+      <div class="card reveal">
+        <h3><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M6 4h12v16H6z"/><path d="M9 9h6M9 13h6M9 17h3"/></svg> Senarai semak penyerahan</h3>
+        <ul class="clean">
+          <li>URL app boleh dibuka guru lain (tiada log masuk tambahan).</li>
+          <li>Data ujian dibuang; Sheet dalam keadaan bersih.</li>
+          <li>Backup Sheet disimpan di lokasi sekolah.</li>
+          <li>Dokumen 1 halaman: tujuan app, siapa boleh edit, tarikh kemas kini.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ======================= TROUBLESHOOTING ======================= -->
+<section id="masalah">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="sec-tag">Bila tak menjadi</span>
+      <h2>Masalah biasa dan penyelesaiannya</h2>
+    </div>
+    <details class="reveal"><summary>Simpan gagal / ralat 403</summary><div class="dbody">Anda kemungkinan menetapkan <span class="mono">Content-Type: application/json</span> pada panggilan POST. Buang header itu — hantar <span class="mono">body: JSON.stringify(data)</span> sahaja. Semak juga access deployment (Anyone atau akaun sekolah).</div></details>
+    <details class="reveal"><summary>Kod sudah diubah, tetapi app masih berkelakuan lama</summary><div class="dbody">Apps Script menjalankan <b>versi deployment</b>, bukan kod terbaru secara automatik. Pergi ke <b>Manage deployments → Edit → Version: New version → Deploy</b>. URL tidak berubah.</div></details>
+    <details class="reveal"><summary>Data tidak muncul walaupun tiada ralat</summary><div class="dbody">Semak nama tab (<span class="mono">SHEET_NAME</span>) dan baris header. Jika header ditukar selepas sistem hidup, bacaan mengikut lajur boleh tersasar. Gunakan butang Baca Data untuk membandingkan dengan apa yang dilihat dalam Sheet.</div></details>
+    <details class="reveal"><summary>App berhenti seketika (quota)</summary><div class="dbody">Had Apps Script ialah ~20,000 permintaan/hari dan 6 minit setiap pelaksanaan. Untuk puncak yang jarang, had ini cukup; jika selalu terkena, pecahkan operasi kepada beberapa permintaan kecil, atau pindah logik berat ke database sebenar.</div></details>
+    <details class="reveal"><summary>Sheet menjadi sangat besar / lambat</summary><div class="dbody">Bila melebihi beberapa ratus ribu baris atau pengguna serentak ramai, pindah ke Supabase/Firebase (Modul 4). Struktur medan yang kemas menjadikan penghijrahan ini jauh lebih mudah.</div></details>
+    <details class="reveal"><summary>Fail tidak berubah apabila dikemas kini</summary><div class="dbody">Ini selalunya <b>cache pelayar</b>. Tekan Ctrl+Shift+R (Windows) atau Cmd+Shift+R (Mac), atau buka dalam tetingkap <i>incognito</i>. Untuk hosting sendiri, pastikan server tidak menyimpan versi lama.</div></details>
+  </div>
+</section>
+
+<!-- ======================= FAQ ======================= -->
+<section id="soalan">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="sec-tag">Soalan lazim</span>
+      <h2>Soalan yang selalu ditanya guru</h2>
+    </div>
+    <details class="reveal"><summary>Saya tak tahu coding. Boleh ke?</summary><div class="dbody">Boleh. Peranan anda ialah <i>menyatakan keperluan dengan jelas</i> dan <i>menguji hasilnya</i>. Canvas menulis kod; anda menyemak sama ada borang, jadual dan mesej ralat berkelakuan betul. Mulakan dengan satu app kecil.</div></details>
+    <details class="reveal"><summary>Betul ke percuma sepenuhnya?</summary><div class="dbody">Ya untuk pakej modul ini: Canvas (peringkat percuma), Apps Script, Sheets, dan hosting (Google Sites / Cloudflare Pages / Netlify / GitHub Pages). Kos tersembunyi biasanya hanya domain sendiri (pilihan) atau had peringkat percuma bila trafik sangat tinggi.</div></details>
+    <details class="reveal"><summary>Data murid selamat tak?</summary><div class="dbody">Ia bergantung sepenuhnya pada cara anda mengawal akses: siapa boleh buka URL, siapa boleh tulis, dan sama ada data itu diletakkan di tempat yang betul. Untuk data sensitif: hadkan akses kepada akaun sekolah, sahkan pengguna di backend, dan jangan sesekali letak kunci di frontend.</div></details>
+    <details class="reveal"><summary>Bila patut tinggalkan Google Sheets?</summary><div class="dbody">Tiga tanda: (1) data melebihi had sel atau menjadi lambat, (2) perlukan login &amp; peranan berbeza, (3) perlu hubungan antara beberapa jadual (cth murid ↔ kelas ↔ markah). Ketiga-tiganya menunjuk ke Supabase/Firebase.</div></details>
+    <details class="reveal"><summary>Boleh guna untuk sistem lama sekolah (PHP/MySQL)?</summary><div class="dbody">Boleh, tetapi ia jalan cerita berbeza: PHP + MariaDB memerlukan pelayan dan penyelenggaraan sendiri. Gunakannya bila sistem sedia ada sudah wujud dan anda hanya menambah fungsi — bukan untuk memulakan projek baharu.</div></details>
+    <details class="reveal"><summary>Bagaimana mahu mula mengajar guru lain?</summary><div class="dbody">Guna mod bentang dalam laman ini untuk sesi 30–45 minit: peta besar dahulu, kemudian tunjuk satu aliran lengkap (borang → Sheet → baca semula), dan akhiri dengan amali 30 minit. Satu app berjaya lebih berkesan daripada sepuluh konsep.</div></details>
+  </div>
+</section>
+
+<!-- ======================= PENUTUP ======================= -->
+<section id="penutup">
+  <div class="wrap">
+    <div class="map-panel reveal center">
+      <span class="sec-tag">Penutup</span>
+      <h2 style="margin-top:.4rem">Satu app kecil hari ini lebih berguna daripada rancangan besar tahun depan</h2>
+      <p class="lead" style="margin-inline:auto">Modul ini direka untuk guru: tanpa pelayan, tanpa kos, dan boleh diselenggara sendiri. Mula dengan satu masalah sebenar di sekolah anda — borang, kehadiran, atau kuiz — dan selesaikan sepenuhnya sebelum menambah fitur.</p>
+      <div class="hero-cta center" style="justify-content:center">
+        <button class="btn btn-primary" id="presentBtn2">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 4h16v11H4z"/><path d="M12 15v5M8.5 20h7"/></svg>
+          Mula mod bentang
+        </button>
+        <a class="btn" href="#peta">Balik ke peta</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <p><b>Modul Pembinaan WebApp</b> — bahan latihan guru · dikemas kini <span id="tarikhKemas">Oktober 2026</span></p>
+    <p>Stack: Gemini Canvas (frontend) · Google Apps Script (backend) · Google Sheets (database) · GitHub Pages / Cloudflare Pages / Netlify / Google Sites (hosting).</p>
+    <p class="small">Contoh database: <a href="https://docs.google.com/spreadsheets/d/1ww4UOM6tf1YnIq1E_N-rW-rO798-Brcz1oh1san9hBY/edit" target="_blank" rel="noopener">DEMO • Modul Pembinaan WebApp — Log</a> · Simpan laman ini sebagai fail untuk digunakan tanpa internet.</p>
+  </div>
+</footer>
+
+<!-- ======================= MOD BENTANG ======================= -->
+<div class="present" id="present" data-open="false" role="dialog" aria-modal="true" aria-label="Mod bentang">
+  <div id="slides"></div>
+  <div class="present-foot">
+    <button class="btn" id="prevBtn" aria-label="Slaid sebelum">←</button>
+    <button class="btn" id="nextBtn" aria-label="Slaid seterusnya">→</button>
+    <div class="dots" id="dots"></div>
+    <span class="hint spacer">← → tukar slaid · Esc keluar</span>
+    <button class="btn" id="closeBtn">Tutup</button>
+  </div>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>
